@@ -191,6 +191,7 @@ UPROGS=\
 	$U/_hello\
 	$U/_sleep\
 	$U/_pingpong\
+	$U/_primes\
 
 
 
