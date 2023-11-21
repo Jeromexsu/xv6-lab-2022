@@ -19,12 +19,12 @@ main(int argc, char *argv[]) {
 
     if(pid == 0) {
         read(p[0],buf,sizeof buf);
-        printf("%d : %s\n",getpid(),buf);
+        printf("%d: received %s\n",getpid(),buf);
         write(p[1],pong,strlen(pong));
     } else {
         write(p[1],ping,strlen(ping));
         read(p[0],buf,sizeof buf);
-        printf("%d : %s\n",getpid(),buf);
+        printf("%d: received %s\n",getpid(),buf);
     }
 
     close(p[0]);
