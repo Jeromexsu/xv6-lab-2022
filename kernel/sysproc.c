@@ -91,3 +91,11 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+// hello world!
+uint64
+sys_hello(void)
+{
+  printf("hello from kernel space!\n");
+  return 0;
+}
