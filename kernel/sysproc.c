@@ -96,6 +96,8 @@ sys_uptime(void)
 uint64
 sys_hello(void)
 {
-  printf("hello from kernel space!\n");
+  char buf[512];
+  argstr(0,buf,512);
+  printf("hello from kernel space! nice to know you %s!\n",buf);
   return 0;
 }

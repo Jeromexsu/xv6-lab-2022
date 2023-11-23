@@ -3,6 +3,9 @@
 
 int main(int argc, char *argv[]) {
     // printf("hello from user space!\n");
-    hello();
+    if(argc < 2) {
+        printf("usage: hello name");
+    }
+    hello(argv[1]);
     exit(0);
 }
