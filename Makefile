@@ -190,6 +190,7 @@ UPROGS=\
 	$U/_zombie\
 	$U/_hello\
 	$U/_trace\
+	$U/_sysinfotest\
 
 
 

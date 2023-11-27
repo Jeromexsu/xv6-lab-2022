@@ -1,1 +1,7 @@
-{}
+{
+    "files.associations": {
+        "types.h": "c",
+        "spinlock.h": "c",
+        "memlayout.h": "c"
+    }
+}

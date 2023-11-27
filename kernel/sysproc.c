@@ -5,6 +5,9 @@
 #include "memlayout.h"
 #include "spinlock.h"
 #include "proc.h"
+#include "sysinfo.h"
+extern int countFreeSpace();
+extern int activeProcessStat();
 
 uint64
 sys_exit(void)
@@ -110,5 +113,24 @@ sys_trace(void)
   argint(0,&mask);
   myproc()->tracemask = mask;
   // printf("trace mask %d set\n",mask);
+  return 0;
+}
+
+uint64
+sys_sysinfo(void)
+{
+  // read in pointer argument
+  uint64 addr = 0;
+  argaddr(0,&addr);
+  // read sysinfo
+  struct proc *p = myproc();
+  struct sysinfo info;
+  info.freemem = countFreeSpace();
+  info.nproc = activeProcessStat();
+  // pass result back to user space
+  if(copyout(p->pagetable,addr,(char *)&info,sizeof(info)) < 0) {
+    return -1;
+  }
+  // printf("sysinfo\n");
   return 0;
 }
