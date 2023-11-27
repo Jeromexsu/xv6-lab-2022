@@ -101,3 +101,14 @@ sys_hello(void)
   printf("hello from kernel space! nice to know you %s!\n",buf);
   return 0;
 }
+
+// trace
+uint64
+sys_trace(void)
+{
+  int mask = 0;
+  argint(0,&mask);
+  myproc()->tracemask = mask;
+  // printf("trace mask %d set\n",mask);
+  return 0;
+}
