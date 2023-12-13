@@ -5,7 +5,10 @@
 #include "memlayout.h"
 #include "spinlock.h"
 #include "proc.h"
-
+#include "stddef.h"
+extern void vmprint(pagetable_t);
+// d 11|01
+// 5 01|01
 uint64
 sys_exit(void)
 {
@@ -74,7 +77,26 @@ sys_sleep(void)
 int
 sys_pgaccess(void)
 {
-  // lab pgtbl: your code here.
+  uint64 address;
+  int range;
+  uint64 umaskAddr;
+  argaddr(0,&address);
+  argint(1,&range);
+  argaddr(2,&umaskAddr);
+
+  int mask = 0;
+  pagetable_t pagetable = myproc()->pagetable;
+
+  for(int i = 0; i < range; i++) {
+    pte_t *pte = walk(pagetable,address+i*PGSIZE,0);
+    if(*pte & PTE_A) { // accessed
+      mask |= 1 << i;
+      *pte &= ~PTE_A;
+    }
+  }
+
+  copyout(pagetable,umaskAddr,(char*)&mask,4);
+
   return 0;
 }
 #endif
