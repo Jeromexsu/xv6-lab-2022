@@ -91,3 +91,13 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+uint64 sys_sigalarm(void) {
+  int tick;
+  uint64 handler; //handler address in user space
+  argint(0,&tick);
+  argaddr(1,&handler);
+  struct proc *proc = myproc();
+  proc->handler = handler;
+  return 0;
+}
