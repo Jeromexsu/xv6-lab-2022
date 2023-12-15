@@ -99,5 +99,16 @@ uint64 sys_sigalarm(void) {
   argaddr(1,&handler);
   struct proc *proc = myproc();
   proc->handler = handler;
+  proc->ticks = tick;
+  proc->tick_passed = 0;
   return 0;
+}
+
+uint64 sys_sigreturn(void) {
+  struct proc* proc = myproc();
+  proc->tick_passed = 0;
+  memmove(proc->trapframe,&(proc->etrapframe),sizeof(struct trapframe));
+  proc->alarm_running = 0;
+
+  return proc->trapframe->a0;
 }

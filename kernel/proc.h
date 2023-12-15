@@ -107,4 +107,8 @@ struct proc {
 
   // alarm test state
   uint64 handler;
+  int ticks;
+  int tick_passed;
+  int alarm_running;
+  struct trapframe etrapframe;
 };

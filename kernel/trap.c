@@ -69,7 +69,13 @@ usertrap(void)
     // ok
     if (which_dev == 2) {
       struct proc *proc = myproc();
-      proc->trapframe->epc =  proc->handler;
+      
+      proc->tick_passed++;
+      if(proc->alarm_running == 0 && proc->ticks != 0 && proc->tick_passed == proc->ticks) {
+        proc->alarm_running = 1;
+        memmove(&(proc->etrapframe),proc->trapframe,sizeof(struct trapframe));
+        proc->trapframe->epc =  proc->handler;
+      }
     } 
   } else {
     printf("usertrap(): unexpected scause %p pid=%d\n", r_scause(), p->pid);
